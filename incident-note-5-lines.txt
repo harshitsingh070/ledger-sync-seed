@@ -1,0 +1,5 @@
+1. What broke: Amounts required paise (\.[0-9]{2}), so whole-rupee sends (Rs.5, INR 18,000, Sent INR99) skipped the txn figure and stored the balance.
+2. How found: incident/app.log shows m-00004 WATER CAN amount_extracted=92213.10 from "Rs.5 … Avl Bal: Rs.92,213.10"; reproduced with Amounts.first() + ingest test.
+3. Who affected: 38 messages / 24 distinct txns with integer amounts (rule: txn figure has no .xx), plus 2 integer emails dropped — not just the water can.
+4. Fix: paise optional in Amounts (([0-9,]+(?:\.[0-9]{2})?), normalised to 2dp) + EmailParser/Icici V2 handle integers; Incident20260911Test (6 tests) fails before, passes after; old suite stayed green (only paise cases).
+5. No recurrence: integer-amount cases now in the suite; dedup key uses the fixed amount so balance-grabs cannot re-enter as separate rows.
