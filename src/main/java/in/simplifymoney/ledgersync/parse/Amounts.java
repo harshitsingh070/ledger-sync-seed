@@ -14,12 +14,17 @@ public final class Amounts {
 
     private Amounts() {}
 
+    // INC-2026-09-11: banks also write whole rupees with no paise
+    // ("Rs.5", "Rs 8,000", "INR 18,000", "Sent INR99"). The old pattern
+    // required "\.[0-9]{2}", so it skipped the transaction amount and
+    // returned the stated balance instead (Rs.5 -> Rs.92,213.10).
+    // The decimal part is now optional; toDecimal normalises to 2 places.
     private static final Pattern AMOUNT =
-            Pattern.compile("(?:Rs\\.?|INR)\\s*([0-9,]+\\.[0-9]{2})");
+            Pattern.compile("(?:Rs\\.?|INR)\\s*([0-9,]+(?:\\.[0-9]{2})?)");
 
     private static final Pattern BALANCE = Pattern.compile(
             "(?:Avl\\s*Bal|Available\\s*Balance|BalAvl|Avl\\s*Limit)\\s*:?\\s*"
-                    + "(?:Rs\\.?|INR)\\s*([0-9,]+\\.[0-9]{2})",
+                    + "(?:Rs\\.?|INR)\\s*([0-9,]+(?:\\.[0-9]{2})?)",
             Pattern.CASE_INSENSITIVE);
 
     /** The transaction amount: the first rupee figure in the message. */
