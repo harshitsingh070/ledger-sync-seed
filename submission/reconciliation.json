@@ -1,0 +1,10 @@
+{
+  "discrepancies": [
+    {
+      "account_last4": "4821",
+      "occurred_at": "2026-07-29T17:06:00+05:30",
+      "amount": "7500.00",
+      "note": "bank states 28479.05 after UPI/STATIONERY at 2026-07-29T17:06:00+05:30 but ledger derives 35979.05 from previous stated 36054.05: Rs.7500.00 left with no evidencing message"
+    }
+  ]
+}
