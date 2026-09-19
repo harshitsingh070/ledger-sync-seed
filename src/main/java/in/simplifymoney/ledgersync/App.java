@@ -135,6 +135,12 @@ public final class App {
                     }
                 }
             }
+            case "gensubmission" -> {
+                // Clean corpus-a files (no June legacy): InMemory store.
+                String out = args.length > 1 ? args[1] : "submission";
+                String corpus = args.length > 2 ? args[2] : "fixtures/corpus-a.jsonl";
+                GenSubmission.main(new String[]{out, corpus});
+            }
             case "bench" -> {
                 // 100k benchmark for README six numbers. Reflective to stay javac-clean.
                 var cls = Class.forName(
