@@ -24,6 +24,14 @@ public final class IciciSmsParser implements MessageParser {
                     + "on (?<when>\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2})\\. "
                     + "Info: (?<merchant>[^.]+)\\.");
 
+    // Second shape, e.g.:
+    // "ICICI Bank Acct XX9075 Dr INR 5 on 23-Jul-2026 18:41; UPI/BARBER ref no 154245459403. BalAvl Rs 52,841.30"
+    // "ICICI Bank Acct XX9075 Cr INR 5000.00 on 01-Aug-2026 14:22; IMPS/P2A/PARAG KAPOOR ref no 908129880743. BalAvl Rs 52,928.02"
+    // Amount may be whole rupees ("INR 5", "INR 4,200") — see Amounts / INC-2026-09-11.
+    private static final Pattern V2 = Pattern.compile(
+            "ICICI Bank Acct XX(?<acct>\\d{4}) (?<dir>Dr|Cr) INR\\s*(?<amt>[0-9,]+(?:\\.[0-9]{2})?) "
+                    + "on (?<when>\\d{2}-[A-Za-z]{3}-\\d{4} \\d{2}:\\d{2});\\s*(?<merchant>[^;]+?) ref no");
+
     @Override
     public boolean supports(RawMessage m) {
         return "sms".equals(m.channel()) && SENDER.equals(m.sender());
@@ -32,15 +40,29 @@ public final class IciciSmsParser implements MessageParser {
     @Override
     public Optional<ParsedTxn> parse(RawMessage m) {
         Matcher v1 = V1.matcher(m.body());
-        if (!v1.find()) return Optional.empty();
+        if (v1.find()) {
+            BigDecimal amount = Amounts.first(m.body());
+            OffsetDateTime at = Dates.ist(v1.group("when"));
+            if (amount == null || at == null) return Optional.empty();
 
-        BigDecimal amount = Amounts.first(m.body());
-        OffsetDateTime at = Dates.ist(v1.group("when"));
-        if (amount == null || at == null) return Optional.empty();
+            Direction d = "debited".equals(v1.group("dir")) ? Direction.DEBIT : Direction.CREDIT;
+            return Optional.of(new ParsedTxn(v1.group("acct"), at, d, amount,
+                    v1.group("merchant").trim(), Amounts.statedBalance(m.body()),
+                    m.messageId()));
+        }
 
-        Direction d = "debited".equals(v1.group("dir")) ? Direction.DEBIT : Direction.CREDIT;
-        return Optional.of(new ParsedTxn(v1.group("acct"), at, d, amount,
-                v1.group("merchant").trim(), Amounts.statedBalance(m.body()),
-                m.messageId()));
+        Matcher v2 = V2.matcher(m.body());
+        if (v2.find()) {
+            BigDecimal amount = Amounts.first(m.body());
+            OffsetDateTime at = Dates.ist(v2.group("when"));
+            if (amount == null || at == null) return Optional.empty();
+            Direction d = "Dr".equals(v2.group("dir")) ? Direction.DEBIT : Direction.CREDIT;
+            return Optional.of(new ParsedTxn(v2.group("acct"), at, d, amount,
+                    v2.group("merchant").trim(), Amounts.statedBalance(m.body()),
+                    m.messageId()));
+        }
+        // Promotional ("pre-approved Personal Loan"), phishing-adjacent etc.:
+        // not a transaction.
+        return Optional.empty();
     }
 }

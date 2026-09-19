@@ -35,4 +35,34 @@ public final class Dates {
         }
         return null;
     }
+
+    /**
+     * Parse an email Date header (RFC 1123, e.g. "Wed, 01 Jul 2026 09:02:00 +0530")
+     * and return the same instant in IST. Most headers are already +0530; one in
+     * the corpus is +0000 (18 Jul 18:50 UTC == 19 Jul 00:20 IST) and must be
+     * converted, otherwise the SMS and the email for the same transaction land
+     * on different keys and the transaction is double-counted.
+     */
+    public static OffsetDateTime emailToIst(String dateHeader) {
+        if (dateHeader == null) return null;
+        String s = dateHeader.trim();
+        // Strip a leading "Date:" if the caller passed the whole line.
+        if (s.regionMatches(true, 0, "Date:", 0, 5)) s = s.substring(5).trim();
+        try {
+            OffsetDateTime odt = OffsetDateTime.parse(s, DateTimeFormatter.RFC_1123_DATE_TIME);
+            return odt.withOffsetSameInstant(IST);
+        } catch (DateTimeParseException ignored) {
+        }
+        // Fallback: "01 Jul 2026 09:02:00" without weekday/timezone -> assume IST.
+        List<DateTimeFormatter> fallbacks = List.of(
+                DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss", Locale.ENGLISH),
+                DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm", Locale.ENGLISH));
+        for (DateTimeFormatter f : fallbacks) {
+            try {
+                return LocalDateTime.parse(s, f).atOffset(IST);
+            } catch (DateTimeParseException ignored2) {
+            }
+        }
+        return null;
+    }
 }
