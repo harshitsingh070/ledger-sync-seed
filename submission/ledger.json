@@ -2,6 +2,171 @@
   "transactions": [
     {
       "account_last4": "4821",
+      "occurred_at": "2026-06-27T10:00:00+05:30",
+      "direction": "debit",
+      "amount": "92213.10",
+      "category": "SPEND",
+      "merchant": "UPI/WATER CAN",
+      "source_message_ids": [
+        "m-legacy-0041"
+      ]
+    },
+    {
+      "account_last4": "4821",
+      "occurred_at": "2026-06-28T11:04:00+05:30",
+      "direction": "debit",
+      "amount": "449.00",
+      "category": "SPEND",
+      "merchant": "SWIGGY",
+      "source_message_ids": [
+        "m-legacy-0001"
+      ]
+    },
+    {
+      "account_last4": "4821",
+      "occurred_at": "2026-06-28T11:04:00+05:30",
+      "direction": "debit",
+      "amount": "449.00",
+      "category": "SPEND",
+      "merchant": "SWIGGY",
+      "source_message_ids": [
+        "m-legacy-0002"
+      ]
+    },
+    {
+      "account_last4": "4821",
+      "occurred_at": "2026-06-28T11:04:00+05:30",
+      "direction": "debit",
+      "amount": "449.00",
+      "category": "SPEND",
+      "merchant": "SWIGGY",
+      "source_message_ids": [
+        "m-legacy-0001"
+      ]
+    },
+    {
+      "account_last4": "9075",
+      "occurred_at": "2026-06-28T19:41:00+05:30",
+      "direction": "debit",
+      "amount": "1299.50",
+      "category": "SPEND",
+      "merchant": "MYNTRA",
+      "source_message_ids": [
+        "m-legacy-0007"
+      ]
+    },
+    {
+      "account_last4": "9075",
+      "occurred_at": "2026-06-28T19:41:00+05:30",
+      "direction": "debit",
+      "amount": "1299.50",
+      "category": "SPEND",
+      "merchant": "MYNTRA",
+      "source_message_ids": [
+        "m-legacy-0007"
+      ]
+    },
+    {
+      "account_last4": "4821",
+      "occurred_at": "2026-06-29T09:15:00+05:30",
+      "direction": "credit",
+      "amount": "45000.00",
+      "category": "INCOME",
+      "merchant": "SALARY CREDIT",
+      "source_message_ids": [
+        "m-legacy-0011"
+      ]
+    },
+    {
+      "account_last4": "4821",
+      "occurred_at": "2026-06-29T13:22:00+05:30",
+      "direction": "debit",
+      "amount": "30.00",
+      "category": "SPEND",
+      "merchant": "UPI/CHAIWALA",
+      "source_message_ids": [
+        "m-legacy-0014"
+      ]
+    },
+    {
+      "account_last4": "4821",
+      "occurred_at": "2026-06-29T13:22:00+05:30",
+      "direction": "debit",
+      "amount": "30.00",
+      "category": "SPEND",
+      "merchant": "UPI/CHAIWALA",
+      "source_message_ids": [
+        "m-legacy-0015"
+      ]
+    },
+    {
+      "account_last4": "9075",
+      "occurred_at": "2026-06-30T08:02:00+05:30",
+      "direction": "debit",
+      "amount": "20.00",
+      "category": "SPEND",
+      "merchant": "UPI/MILK BOOTH",
+      "source_message_ids": [
+        "m-legacy-0019"
+      ]
+    },
+    {
+      "account_last4": "9075",
+      "occurred_at": "2026-06-30T17:50:00+05:30",
+      "direction": "debit",
+      "amount": "5000.00",
+      "category": "SPEND",
+      "merchant": "IMPS/P2A/PARAG KAPOOR",
+      "source_message_ids": [
+        "m-legacy-0023"
+      ]
+    },
+    {
+      "account_last4": "4821",
+      "occurred_at": "2026-06-30T17:52:00+05:30",
+      "direction": "credit",
+      "amount": "5000.00",
+      "category": "INCOME",
+      "merchant": "IMPS/P2A/PARAG KAPOOR",
+      "source_message_ids": [
+        "m-legacy-0024"
+      ]
+    },
+    {
+      "account_last4": "4821",
+      "occurred_at": "2026-06-30T21:10:00+05:30",
+      "direction": "debit",
+      "amount": "899.99",
+      "category": "SPEND",
+      "merchant": "BIGBASKET",
+      "source_message_ids": [
+        "m-legacy-0028"
+      ]
+    },
+    {
+      "account_last4": "4821",
+      "occurred_at": "2026-06-30T21:10:00+05:30",
+      "direction": "debit",
+      "amount": "899.99",
+      "category": "SPEND",
+      "merchant": "BIGBASKET",
+      "source_message_ids": [
+        "m-legacy-0029"
+      ]
+    },
+    {
+      "account_last4": "9075",
+      "occurred_at": "2026-06-30T22:45:00+05:30",
+      "direction": "debit",
+      "amount": "75.00",
+      "category": "SPEND",
+      "merchant": "UPI/AUTO RICKSHAW",
+      "source_message_ids": [
+        "m-legacy-0033"
+      ]
+    },
+    {
+      "account_last4": "4821",
       "occurred_at": "2026-07-01T09:02:00+05:30",
       "direction": "credit",
       "amount": "45000.00",
