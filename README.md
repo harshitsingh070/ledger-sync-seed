@@ -22,7 +22,7 @@ docker compose up -d
 # 4. document store ops
 ./gradlew run --args="backfill"    # SQL -> Mongo, idempotent; re-run writes 0
 ./gradlew run --args="doccheck"    # 0 divergences when stores agree
-./gradlew test                     # 21 tests green (contract + incident + backfill/checker)
+./gradlew test                     # 33 tests green (contract + amounts + incident + backfill/checker + unseen-corpus)
 ```
 
 `submission/` in this repo is gitignored; the three files for corpus-a were generated
