@@ -139,19 +139,21 @@ public final class Reports {
                 java.math.BigDecimal expected = prevStated.add(pending).setScale(2);
                 java.math.BigDecimal gap = expected.subtract(stated).setScale(2);
                 if (gap.compareTo(BigDecimal.ZERO) != 0) {
+                    String atStr = t.occurredAt().format(
+                            java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME);
                     java.util.Map<String, Object> d = new LinkedHashMap<>();
                     d.put("account_last4", acct);
-                    d.put("occurred_at", t.occurredAt().toString());
+                    d.put("occurred_at", atStr);
                     d.put("amount", gap.abs().toPlainString());
                     d.put("note", gap.signum() > 0
                             ? "bank states " + stated.toPlainString() + " after "
-                                    + t.merchant() + " at " + t.occurredAt()
+                                    + t.merchant() + " at " + atStr
                                     + " but ledger derives " + expected.toPlainString()
                                     + " from previous stated " + prevStated.toPlainString()
                                     + ": Rs." + gap.abs().toPlainString()
                                     + " left with no evidencing message"
                             : "bank states " + stated.toPlainString() + " after "
-                                    + t.merchant() + " at " + t.occurredAt()
+                                    + t.merchant() + " at " + atStr
                                     + " but ledger derives " + expected.toPlainString()
                                     + ": Rs." + gap.abs().toPlainString()
                                     + " arrived with no evidencing message");
